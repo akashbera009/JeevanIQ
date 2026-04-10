@@ -1,0 +1,17 @@
+cd server
+source venv/bin/activate
+
+cd jeevan_BE
+python manage.py runserver
+
+
+in terminal => 
+psql postgres
+create DATABASE jeevan_db ; 
+
+# if migrations required 
+python manage.py makemigrations home
+python manage.py createsuperuser
+
+use postgres dbshell?
+activate venv , goto  /server/jeevan_BE => python manage.py dbshell 
