@@ -4,8 +4,8 @@ export const APP_VERSION = '1.0.0';
 // ─── API ──────────────────────────────────────────────────────────────────────
 export const API_TIMEOUT = 30000; // 30 seconds
 export const API_BASE_URL = __DEV__
-  ? 'http://127.0.0.1:8000/api/v1' // Android emulator
-  : 'https://api.jeevaniq.com/api/v1';
+  ? 'http://127.0.0.1:8000/home'
+  : 'http://localhost:8000/home' 
 
 // ─── Storage Keys ─────────────────────────────────────────────────────────────
 export const STORAGE_KEYS = {

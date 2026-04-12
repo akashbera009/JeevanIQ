@@ -53,7 +53,7 @@ const PatientCard: React.FC<{
         <View style={[styles.avatar, { backgroundColor: severityBg, borderColor: severityColor }]}>
           {patient.isCritical && <View style={styles.criticalDot} />}
           <Text style={[styles.avatarText, { color: severityColor }]}>
-            {getInitials(patient.name)}
+            {/* {getInitials(patient.name)} */}
           </Text>
         </View>
 
@@ -68,18 +68,19 @@ const PatientCard: React.FC<{
           <Text style={styles.patientMeta}>
             {patient.age}y • {patient.gender} • {patient.bloodGroup ?? '—'}
           </Text>
-          {patient.symptoms.length > 0 && (
+          {/* {patient?.symptoms && patient?.symptoms?.length > 0 && (
             <Text style={styles.symptoms} numberOfLines={1}>
-              {patient.symptoms.slice(0, 3).join(', ')}
+              {patient?.symptoms?.slice(0, 3)
+              ?.join(', ')}
             </Text>
-          )}
+          )} */}
         </View>
 
         {/* Right side */}
         <View style={styles.cardRight}>
           <View style={[styles.severityBadge, { backgroundColor: severityBg }]}>
             <Text style={[styles.severityLabel, { color: severityColor }]}>
-              {patient.severity.toUpperCase()}
+              {/* {patient.severity && patient?.severity.toUpperCase()} */}
             </Text>
           </View>
           {patient.queuePosition != null && (
@@ -101,9 +102,10 @@ const PatientListScreen: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState<SeverityLevel | 'all'>('all');
 
   const loadPatients = useCallback(() => {
-    dispatch(fetchPatientsAction({
-      filters: activeFilter !== 'all' ? { severity: activeFilter, ...filters } : filters,
-    }));
+    // dispatch(fetchPatientsAction({
+    //   filters: activeFilter !== 'all' ? { severity: activeFilter, ...filters } : filters,
+    // }));
+    dispatch(fetchPatientsAction({}))
   }, [dispatch, activeFilter, filters]);
 
   useEffect(() => {
@@ -112,7 +114,7 @@ const PatientListScreen: React.FC = () => {
 
   const debouncedSearch = useDebounce((text: string) => {
     dispatch(setFilters({ search: text }));
-    dispatch(fetchPatientsAction({ filters: { search: text } }));
+    // dispatch(fetchPatientsAction({ filters: { search: text } }));
   }, 400);
 
   const handleSearch = (text: string) => {
@@ -122,10 +124,11 @@ const PatientListScreen: React.FC = () => {
 
   const handleFilterPress = (value: SeverityLevel | 'all') => {
     setActiveFilter(value);
-    dispatch(fetchPatientsAction({
-      filters: value !== 'all' ? { severity: value } : {},
-    }));
+    // dispatch(fetchPatientsAction({
+    //   filters: value !== 'all' ? { severity: value } : {},
+    // }));
   };
+console.log('list i s' , list);
 
   return (
     <View style={styles.container}>
@@ -190,7 +193,7 @@ const PatientListScreen: React.FC = () => {
       {/* Patient List */}
       <FlatList
         data={list}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item?.age + item?.gender}
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
         refreshControl={
