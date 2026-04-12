@@ -13,7 +13,7 @@ const RootNavigator: React.FC = () => {
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false, animation: 'fade' }}>
-      {!isAuthenticated ? (
+      {isAuthenticated ? (
         <Stack.Screen name={ScreenNames.AUTH_NAVIGATOR} component={AuthNavigator} />
       ) : (
         <Stack.Screen name={ScreenNames.BOTTOM_TAB_NAVIGATOR} component={BottomTabNavigator} />

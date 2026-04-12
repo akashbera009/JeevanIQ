@@ -1,5 +1,10 @@
+python -m venv venv [if not created already] / python3
+
 cd server
 source venv/bin/activate
+
+install required pip libraries 
+pip install -r requirements.txt
 
 cd jeevan_BE
 python manage.py runserver
@@ -10,7 +15,7 @@ psql postgres
 create DATABASE jeevan_db ; 
 
 # if migrations required 
-python manage.py makemigrations home
+python manage.py makemigrations patients
 python manage.py createsuperuser
 
 use postgres dbshell?

@@ -52,7 +52,27 @@ apiClient.interceptors.request.use(
   },
   error => Promise.reject(error),
 );
+// Add Logging in Request Interceptor
+apiClient.interceptors.request.use(
+  async (config: InternalAxiosRequestConfig) => {
+    const token = await getAccessToken();
 
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    // 🔍 LOG REQUEST
+    console.log("🚀 API REQUEST:");
+    console.log("URL:", `${config.baseURL}${config.url}`);
+    console.log("METHOD:", config.method?.toUpperCase());
+    console.log("HEADERS:", config.headers);
+    console.log("PARAMS:", config.params);
+    console.log("DATA (payload):", config.data);
+
+    return config;
+  },
+  error => Promise.reject(error),
+);
 // ─── Response Interceptor ─────────────────────────────────────────────────────
 apiClient.interceptors.response.use(
   (response: AxiosResponse) => response,
