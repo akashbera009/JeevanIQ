@@ -1,0 +1,18 @@
+{% extends "admin/submit_line.html" %}
+
+{% block extra-actions %}
+
+<div class="form-group">
+    <a href="https://django-jazzmin.readthedocs.io/configuration/" class="btn btn-outline-info form-control">
+        goto some demo link
+    </a>
+</div>
+
+<div class="form-group">
+    <input type="submit"
+           class="btn btn-outline-info form-control"
+           value="perform some Action"
+           name="_my_action">
+</div>
+
+{% endblock %}
