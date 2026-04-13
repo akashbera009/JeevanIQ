@@ -12,3 +12,7 @@ class User(AbstractUser):
     )
     role = models.CharField(max_length=10, choices=ROLE_CHOICES)
 
+class User1(models.Model):
+    name : models.CharField(max_length=10)
+    age = models.IntegerField()
+    gender = models.CharField(max_length=10)

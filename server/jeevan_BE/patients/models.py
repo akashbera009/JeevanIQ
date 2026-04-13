@@ -22,3 +22,7 @@ class Patient(models.Model):
 
     def __str__(self):
         return self.user.username
+
+    class Meta:
+        verbose_name = "Patient"
+        verbose_name_plural = "All Patients" 

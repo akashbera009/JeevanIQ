@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -65,7 +66,8 @@ ROOT_URLCONF = 'jeevan_BE.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        # 'DIRS': [],
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -133,8 +135,13 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
-
+import os
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+
 REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 10,
@@ -142,4 +149,171 @@ REST_FRAMEWORK = {
     #     'rest_framework.authentication.BasicAuthentication',
     #     'rest_framework.authentication.SessionAuthentication',
     # ]
+}
+
+
+JAZZMIN_SETTINGS = {
+    "site_title": "JeevanIQ Admin",
+    "site_header": "JeevanIQ Login",
+    "site_brand": "JeevanIQ Admin",
+    "site_logo": "images/logo2.png",
+
+    # "login_logo": None,
+    "login_logo": "images/logo2.png",
+    "login_logo_dark": None,
+
+    # admin panel logo sidebar logo 
+    "custom_css": "css/loginScreenCss.css",
+
+    "site_logo_classes": "sidebar-logo",
+    "login_logo_classes": "login-logo-custom",
+
+    "welcome_sign": "Welcome to the JeevanIQ Admin panel",
+
+    "copyright": "JeevanIQ Ltd",
+    # adds seachgbar for each given entries 
+    "search_model": [
+        "patients.Patient",
+        "appointments.Appointment",
+    ],
+
+    "topmenu_links": [
+
+        # Url that gets reversed (Permissions can be added)
+        {"name": "Home",  "url": "admin:index", "permissions": ["auth.view_user"]},
+
+
+        # model admin to link to (Permissions checked against model)
+        # {"model": "patients.Patient"},
+
+        # App with dropdown menu to all its models pages (Permissions checked against models)
+        {"app": "accounts"},
+
+        # external url that opens in a new window (Permissions can be added)
+        {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
+    ],
+
+    # Additional links to include in the user menu on the top right ("app" url type is not allowed)
+    "usermenu_links": [
+        {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
+        {"model": "patients.Patient"},
+        {"model": "appointments.Appointment"}
+    ],
+
+    #############
+    # Side Menu #
+    #############
+
+    # Whether to display the side menu
+    "show_sidebar": True,
+
+    # Whether to aut expand the menu
+    "navigation_expanded": False, # eachmenu expanded version 
+
+    # Hide these apps when generating side menu e.g (auth)
+    "hide_apps": ['auth'],
+
+    # Hide these models when generating side menu (e.g auth.user) [must not be in the top menu link bar ]
+    # "hide_models": ["patients.Patient"],
+    
+    # List of apps (and/or models) to base side menu ordering off of (does not need to contain all apps/models)
+    # "order_with_respect_to":['patients', 'doctors', 'hospitals' ,'appointments', 'accounts' ],
+    "order_with_respect_to": [
+        "patients",
+        "patients.patient",
+
+        "doctors",
+        "doctors.doctor",
+
+        "hospitals",
+        "hospitals.hospital",
+
+        "appointments",
+        "appointments.appointment",
+
+        "accounts",
+        "accounts.user",
+        "accounts.user1",
+    ],
+
+    # Custom links to append to app groups, keyed on app name
+    "custom_links": {
+        "patients": [{
+            "name": "View all appoinments", 
+            "url":"admin:appointments_appointment_changelist",  # _changelist
+            "icon": "fas fa-calendar-check",
+            "permissions": ["appointments.view_appointment"]
+        }, {
+            "name": "Add new appoinment" , 
+            "url":"admin:appointments_appointment_add",  # _add
+            "icon": "fa fa-plus",
+            "permissions": ["appointments.view_appointment"]
+        }]
+    },
+
+    # Custom icons for side menu apps/models
+    "icons": {
+        # 🔐 Accounts / Auth
+        "auth": "fas fa-users-cog",
+        "accounts.user1": "fas fa-user",
+        "accounts.user": "fas fa-user-shield",
+
+        # 🏥 Hospitals
+        "hospitals": "fas fa-hospital",
+        "hospitals.hospital": "fas fa-hospital-alt",
+        "hospitals.department": "fas fa-building",
+
+        # 🧑‍⚕️ Doctors
+        "doctors": "fas fa-user-md",
+        "doctors.doctor": "fas fa-user-md",
+
+        # 🧑 Patients
+        "patients": "fas fa-procedures",
+        "patients.patient": "fas fa-user-injured",
+
+        # 📅 Appointments
+        "appointments": "fas fa-calendar-check",
+        "appointments.appointment": "fas fa-calendar-plus",
+
+        # 🔥 Queue / Core logic
+        "patient_queues": "fas fa-stream",
+        # "patient_queues.queueentry": "fas fa-list-ol",
+    },
+
+    # Icons that are used when one is not manually specified
+    "default_icon_parents": "fas fa-chevron-circle-right", # default circle-right 
+    "default_icon_children": "fas fa-circle", # default circle 
+
+
+    #################
+    # Related Modal #
+    #################
+    # Use modals instead of popups
+    # "related_modal_active": True,  # if true , pop up opened , else in new page
+
+    #############
+    # UI Tweaks #
+    #############
+    # Whether to show the UI customizer on the sidebar
+    # "show_ui_builder": True,
+
+    ###############
+    # Change view #
+    ###############
+    # Render out the change view as a single form, or in tabs, current options are
+    # - single
+    # - horizontal_tabs (default)
+    # - vertical_tabs
+    # - collapsible
+    # - carousel
+    "changeform_format": "collapsible",
+
+    # override change forms on a per modeladmin basis
+    "changeform_format_overrides": {"patients.patient": "collapsible", "doctors.doctor": "vertical_tabs"},
+
+}
+
+JAZZMIN_UI_TWEAKS = {
+    "theme": "flatly",
+    # "dark_mode_theme": "darkly",
 }

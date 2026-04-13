@@ -13,5 +13,11 @@ class PatientAdmin(admin.ModelAdmin):
     list_filter = ["severity"]
     search_fields = ["user__username","hospital__name", "symptoms"]
 
+    def response_change(self, request, obj):
+        response = super().response_change(request, obj)
+
+        if "_my_action" in request.POST:
+            print("🔥 My custom action triggered")
+        return response
+
 admin.site.register(Patient , PatientAdmin)    
-admin.site.register(User)
