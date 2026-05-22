@@ -317,3 +317,10 @@ JAZZMIN_UI_TWEAKS = {
     "theme": "flatly",
     # "dark_mode_theme": "darkly",
 }
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
+    }
+}
